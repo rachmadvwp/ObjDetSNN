@@ -66,11 +66,11 @@ Other parameters are available in `object_detection.py`.
 
 Train a DenseNet121-16 on Prophesee NCARS with 5 timesteps and 2 tbins:
 
-    python classification.py -dataset ncars -path path/to/NCARS_dataset -model densenet121-16 -T 5 -tbin 2
+    python classification.py -dataset ncars -path path/to/NCARS_dataset -model densenet-121_16 -T 5 -tbin 2
 
 To measure test accuracy and sparsity on a pretrained model:
 
-    python object_detection.py -dataset ncars -path path/to/NCARS_dataset -model densenet121-16 -T 5 -tbin 2 -pretrained path/to/pretrained_model -no_train -test
+    python object_detection.py -dataset ncars -path path/to/NCARS_dataset -model densenet-121_16 -T 5 -tbin 2 -pretrained path/to/pretrained_model -no_train -test
 
 Other parameters are available in `classification.py`.
 
