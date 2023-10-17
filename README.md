@@ -16,7 +16,7 @@ Our codes require [SpikingJelly 0.0.0.0.4](https://github.com/fangwei123456/spik
 
 (Update) Try using the later version:
 
-    pip install torch torchvision pytorch-lightning torchmetrics
+    pip install torch torchvision pytorch-lightning torchmetrics comet-ml
     
 (Update) Then install the later version of spikingjelly:
 
