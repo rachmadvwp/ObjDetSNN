@@ -1,4 +1,4 @@
-# Object Detection with Spiking Neural Networks on Automotive Event Data
+# Object Detection with Spiking Neural Networks on Automotive Event Data (updated)
 
 *This work is supported by the French technological research agency (ANRT) through a CIFRE thesis in collaboration between Renault and Université Côte d'Azur.*
 
@@ -13,6 +13,16 @@ Our main contributions are:
 4. We present spiking neural networks for object detection composed of a spiking backbone and SSD bounding box regression heads that achieve qualitative results on the real-world GEN1 Automotive Detection event dataset. (see `object_detection_module.py`)
  
 Our codes require [SpikingJelly 0.0.0.0.4](https://github.com/fangwei123456/spikingjelly/tree/0.0.0.0.4), PyTorch 1.11.0, Torchvision 0.11.1, PyTorch Lightning 1.4.4 and Torchmetrics 0.5.0.
+
+(Update) Try using the later version:
+
+    pip install torch torchvision pytorch-lightning torchmetrics
+    
+(Update) Then install the later version of spikingjelly:
+
+    git clone https://github.com/fangwei123456/spikingjelly.git
+    cd spikingjelly
+    python setup.py install
 
 # Results
 Since the publication of the paper, results have been improved by correcting errors in the dataset generation and using more epochs for classification tasks (30 epochs instead of 10).
