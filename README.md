@@ -1,4 +1,4 @@
-# Object Detection with Spiking Neural Networks on Automotive Event Data
+# Object Detection with Spiking Neural Networks on Automotive Event Data (updated)
 
 *This work is supported by the French technological research agency (ANRT) through a CIFRE thesis in collaboration between Renault and Université Côte d'Azur.*
 
@@ -14,6 +14,17 @@ Our main contributions are:
  
 Our codes require [SpikingJelly 0.0.0.0.4](https://github.com/fangwei123456/spikingjelly/tree/0.0.0.0.4), PyTorch 1.11.0, Torchvision 0.11.1, PyTorch Lightning 1.4.4 and Torchmetrics 0.5.0.
 
+(Updated) Try using the later version:
+
+    pip install spikingjelly
+    pip install torchvision pytorch-lightning torchmetrics comet-ml
+    
+(Updated) Also install the later version of spikingjelly:
+
+    git clone https://github.com/fangwei123456/spikingjelly.git
+    cd spikingjelly
+    python setup.py install
+
 # Results
 Since the publication of the paper, results have been improved by correcting errors in the dataset generation and using more epochs for classification tasks (30 epochs instead of 10).
 
@@ -25,13 +36,13 @@ Since the publication of the paper, results have been improved by correcting err
 | MobileNet-64 + SSD | 24.26M | 4.34G | 0.147 | 29.44% |
 | DenseNet121-24 + SSD | 8.2M | 2.33G | 0.189 | 37.20% |
 
-Train a VGG-11 + SSD model on Prophesee GEN1 with 5 timesteps and 2 tbins:
+(Updated) Train a VGG-11 + SSD model on Prophesee GEN1 with 5 timesteps and 2 tbins:
 
-    python object_detection.py -path path/to/GEN1_dataset -backbone vgg-11 -T 5 -tbin 2 -save_ckpt
+    python object_detection.py -path ./path_to_GEN1_dataset -backbone vgg-11 -T 5 -tbin 2 -save_ckpt
 
-To measure test mAP and sparsity on a pretrained model:
+(Updated) To measure test mAP and sparsity on a pretrained model:
 
-    python object_detection.py -path path/to/GEN1_dataset -backbone vgg-11 -T 5 -tbin 2 -pretrained path/to/pretrained_model -no_train -test
+    python object_detection.py -path ./path_to_GEN1_dataset -backbone vgg-11 -T 5 -tbin 2 -pretrained path/to/pretrained_model -no_train -test
 
 Other parameters are available in `object_detection.py`.
 
@@ -54,13 +65,13 @@ Other parameters are available in `object_detection.py`.
 | DenseNet121-32 | 6.95M | 3.98G | 0.898 | 38.32% | 0.966 | 29.46% |
 | DenseNet169-32 | 12.48 | 4.72G | 0.825 | 37.48% | 0.967 | 40.35% |
 
-Train a DenseNet121-16 on Prophesee NCARS with 5 timesteps and 2 tbins:
+(Updated) Train a DenseNet121-16 on Prophesee NCARS with 5 timesteps and 2 tbins:
 
-    python classification.py -dataset ncars -path path/to/NCARS_dataset -model densenet121-16 -T 5 -tbin 2
+    python classification.py -dataset ncars -path ./path_to_NCARS_dataset -model densenet-121_16 -T 5 -tbin 2
 
-To measure test accuracy and sparsity on a pretrained model:
+(Updated) To measure test accuracy and sparsity on a pretrained model:
 
-    python object_detection.py -dataset ncars -path path/to/NCARS_dataset -model densenet121-16 -T 5 -tbin 2 -pretrained path/to/pretrained_model -no_train -test
+    python object_detection.py -dataset ncars -path ./path_to_NCARS_dataset -model densenet-121_16 -T 5 -tbin 2 -pretrained path/to/pretrained_model -no_train -test
 
 Other parameters are available in `classification.py`.
 
