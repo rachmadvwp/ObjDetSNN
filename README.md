@@ -19,7 +19,7 @@ Our codes require [SpikingJelly 0.0.0.0.4](https://github.com/fangwei123456/spik
     pip install spikingjelly
     pip install torchvision pytorch-lightning torchmetrics comet-ml
     
-(Updated) Also install the later version of spikingjelly:
+(Updated) An alternative on how to install the later version of spikingjelly:
 
     git clone https://github.com/fangwei123456/spikingjelly.git
     cd spikingjelly
