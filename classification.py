@@ -20,7 +20,7 @@ from classification_module import ClassificationLitModule
 
 def main():
     parser = argparse.ArgumentParser(description='Classify event dataset')
-    parser.add_argument('-device', default=0, type=int, help='device')
+    parser.add_argument('-device', default=1, type=int, help='device')
     parser.add_argument('-precision', default=16, type=int, help='whether to use AMP {16, 32, 64}')
 
     parser.add_argument('-b', default=64, type=int, help='batch size')
@@ -94,7 +94,8 @@ def main():
             print("Comet is not installed, Comet logger will not be available.")
 
     trainer = pl.Trainer(
-        gpus=[args.device], gradient_clip_val=1., max_epochs=args.epochs,
+        ###debug### gpus=[args.device], gradient_clip_val=1., max_epochs=args.epochs,
+        accelerator="gpu", gradient_clip_val=1., max_epochs=args.epochs,
         limit_train_batches=1., limit_val_batches=1.,
         check_val_every_n_epoch=1,
         deterministic=False,

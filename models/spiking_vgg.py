@@ -2,7 +2,8 @@ from collections import OrderedDict
 
 import torch
 import torch.nn as nn
-from spikingjelly.clock_driven import functional, neuron
+###debug### from spikingjelly.clock_driven import functional, neuron
+from spikingjelly.activation_based import functional, neuron
 
 __all__ = [
     'SpikingVGG', 'MultiStepSpikingVGG',

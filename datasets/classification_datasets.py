@@ -37,12 +37,23 @@ class ClassificationDataset(Dataset):
             
     def __getitem__(self, index):
         sparse_tensor, target = self.samples[index]
-        sample = sample.sparse_resize_(
-            (self.T, sample.size(1), sample.size(2), self.C), 3, 1
-        ).to_dense().permute(0,3,1,2)
+        ### print('self.samples[index]: ', str(self.samples[index])) ###debug###
+        ### print('sparse_tensor: ', str(sparse_tensor)) ###debug###
+        ### print('sparse_tensor.shape: ', str(sparse_tensor.shape)) ###debug###
+        ### print('target: ', str(target)) ###debug###
+        sample = sparse_tensor.to_dense().permute(0,3,1,2)
+        # sample = sample.sparse_resize_( ###debug###
+        #     (self.T, sample.size(1), sample.size(2), self.C), 3, 1
+        # ).to_dense().permute(0,3,1,2)
+        ### print('sample1: ', str(sample)) ###debug###
+        ### print('sample1.shape: ', str(sample.shape)) ###debug###
         sample = T.Resize((64,64), T.InterpolationMode.NEAREST)(sample)
-
+        ### print('sample2: ', str(sample)) ###debug###
+        ### print('sample2.shape: ', str(sample.shape)) ###debug###
         return sample, target
+
+        ## sparse_tensor, target = self.samples[index]
+        ## return sparse_tensor.to_dense().permute(0,3,1,2), target
 
     def __len__(self):
         return len(self.samples)
@@ -187,7 +198,7 @@ class GEN1ClassificationDataset(ClassificationDataset):
                 # Oversample pedestrians with an horizontal mirror
                 if self.mode == "train" and target == 1:
                     coords[:,1] = self.w-coords[:,1]-1
-                        sparse_tensor = torch.sparse_coo_tensor(
+                    sparse_tensor = torch.sparse_coo_tensor(
                         coords.t().to(torch.int32), 
                         feats,
                         (self.T, self.quantized_h, self.quantized_w, self.C),

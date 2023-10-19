@@ -3,7 +3,8 @@ from typing import Any, List, Tuple
 
 import torch
 import torch.nn as nn
-from spikingjelly.clock_driven import functional, neuron
+###debug### from spikingjelly.clock_driven import functional, neuron
+from spikingjelly.activation_based import functional, neuron
 from torchvision._internally_replaced_utils import load_state_dict_from_url
 
 __all__ = [

@@ -1,6 +1,7 @@
 import torch.nn as nn
 
-from spikingjelly.clock_driven import layer, neuron, surrogate
+###debug### from spikingjelly.clock_driven import layer, neuron, surrogate
+from spikingjelly.activation_based import layer, neuron, surrogate
 from .spiking_densenet import *
 from .spiking_squeezenet import *
 from .spiking_mobilenet import *
@@ -18,7 +19,8 @@ class SpikingBlock(nn.Module):
 			      stride=stride, padding=0, groups=groups),
 		)
         
-        self.neuron = neuron.MultiStepParametricLIFNode(
+        ###debug### self.neuron = neuron.MultiStepParametricLIFNode(
+        self.neuron = neuron.ParametricLIFNode(
             init_tau=2.0, v_threshold=1., 
             surrogate_function=surrogate.ATan(),
             detach_reset=True, backend=backend,
@@ -32,8 +34,10 @@ class SpikingBlock(nn.Module):
 
 def get_model(args):
     norm_layer = nn.BatchNorm2d if args.bn else None
-    ms_neuron = neuron.MultiStepParametricLIFNode
+    ###debug### ms_neuron = neuron.MultiStepParametricLIFNode
+    ms_neuron = neuron.ParametricLIFNode
 
+    print(str(args.model))
     family, version = args.model.split('-')
     if family == "densenet":
         depth, growth_rate = version.split('_')
@@ -42,14 +46,14 @@ def get_model(args):
             2*args.tbin, norm_layer=norm_layer,
             multi_step_neuron=ms_neuron,
             growth_rate=int(growth_rate), block_config=blocks[depth],
-            num_classes=2, backend="cupy",
+            num_classes=2, ###debug### backend="cupy",
         )
     elif family == "mobilenet":
         return multi_step_spiking_mobilenet(
             2*args.tbin, norm_layer=norm_layer,
             in_channels=int(version),
             multi_step_neuron=ms_neuron,
-            num_classes=2, dw=True, backend="cupy", 
+            num_classes=2, dw=True, ###debug### backend="cupy", 
         )
     elif family == "squeezenet":
         squeezenets = {
@@ -59,14 +63,14 @@ def get_model(args):
         return squeezenets[version](
             2*args.tbin, norm_layer=norm_layer,
             multi_step_neuron=ms_neuron,
-            num_classes=2, backend="cupy"
+            num_classes=2, ###debug### backend="cupy"
         )
     elif family == "vgg":
         if version == "custom":
                 return multi_step_spiking_vgg_custom(
                     2*args.tbin, cfg=args.cfg,
                     norm_layer=norm_layer, multi_step_neuron=ms_neuron,
-                    num_classes=2, backend="cupy"
+                    num_classes=2, ###debug### backend="cupy"
                 )
         else:
             vggs = {
@@ -77,5 +81,5 @@ def get_model(args):
             return vggs[version](
                 2*args.tbin, norm_layer=norm_layer,
                 multi_step_neuron=ms_neuron,
-                num_classes=2, backend="cupy"
+                num_classes=2, ###debug### backend="cupy"
             )

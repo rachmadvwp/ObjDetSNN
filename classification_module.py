@@ -15,15 +15,24 @@ class ClassificationLitModule(pl.LightningModule):
         self.num_classes = num_classes
         self.all_nnz, self.all_nnumel = 0, 0
 
-        self.train_acc = torchmetrics.Accuracy(num_classes=num_classes)
-        self.val_acc = torchmetrics.Accuracy(num_classes=num_classes)
-        self.test_acc = torchmetrics.Accuracy(num_classes=num_classes)
-        self.train_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
-        self.val_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
-        self.test_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
-        self.train_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
-        self.val_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
-        self.test_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
+        ###debug### self.train_acc = torchmetrics.Accuracy(num_classes=num_classes)
+        ###debug### self.val_acc = torchmetrics.Accuracy(num_classes=num_classes)
+        ###debug### self.test_acc = torchmetrics.Accuracy(num_classes=num_classes)
+        ###debug### self.train_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
+        ###debug### self.val_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
+        ###debug### self.test_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
+        ###debug### self.train_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
+        ###debug### self.val_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
+        ###debug### self.test_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
+        self.train_acc = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes)
+        self.val_acc = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes)
+        self.test_acc = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes)
+        self.train_acc_by_class = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes, average="none")
+        self.val_acc_by_class = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes, average="none")
+        self.test_acc_by_class = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes, average="none")
+        self.train_confmat = torchmetrics.ConfusionMatrix(task="multiclass", num_classes=num_classes)
+        self.val_confmat = torchmetrics.ConfusionMatrix(task="multiclass", num_classes=num_classes)
+        self.test_confmat = torchmetrics.ConfusionMatrix(task="multiclass", num_classes=num_classes)
 
         self.model = model
 
@@ -118,6 +127,9 @@ class ClassificationLitModule(pl.LightningModule):
             self.all_nnumel += total_nnumel
 
     def configure_optimizers(self):
+        ###debug### print('self.model: ', str(self.model))
+        ###debug### print('self.parameters(): ', str(self.parameters()))
+        ###debug### print('self.lr: ', str(self.lr))
         optimizer = torch.optim.AdamW(self.parameters(), lr=self.lr)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             optimizer,
