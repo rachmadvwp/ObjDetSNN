@@ -37,23 +37,12 @@ class ClassificationDataset(Dataset):
             
     def __getitem__(self, index):
         sparse_tensor, target = self.samples[index]
-        ### print('self.samples[index]: ', str(self.samples[index])) ###debug###
-        ### print('sparse_tensor: ', str(sparse_tensor)) ###debug###
-        ### print('sparse_tensor.shape: ', str(sparse_tensor.shape)) ###debug###
-        ### print('target: ', str(target)) ###debug###
-        sample = sparse_tensor.to_dense().permute(0,3,1,2)
-        # sample = sample.sparse_resize_( ###debug###
-        #     (self.T, sample.size(1), sample.size(2), self.C), 3, 1
-        # ).to_dense().permute(0,3,1,2)
-        ### print('sample1: ', str(sample)) ###debug###
-        ### print('sample1.shape: ', str(sample.shape)) ###debug###
+        sample = sample.sparse_resize_( 
+            (self.T, sample.size(1), sample.size(2), self.C), 3, 1
+        ).to_dense().permute(0,3,1,2)
         sample = T.Resize((64,64), T.InterpolationMode.NEAREST)(sample)
-        ### print('sample2: ', str(sample)) ###debug###
-        ### print('sample2.shape: ', str(sample.shape)) ###debug###
-        return sample, target
 
-        ## sparse_tensor, target = self.samples[index]
-        ## return sparse_tensor.to_dense().permute(0,3,1,2), target
+        return sample, target
 
     def __len__(self):
         return len(self.samples)
