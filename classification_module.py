@@ -62,7 +62,8 @@ class ClassificationLitModule(pl.LightningModule):
         if mode != "test":
             self.log(f'{mode}_loss', loss, on_epoch=True, prog_bar=(mode == "train"))
 
-        spikingjelly.clock_driven.functional.reset_net(self.model)
+        ###debug### spikingjelly.clock_driven.functional.reset_net(self.model)
+        spikingjelly.activation_based.functional.reset_net(self.model)
 
         return loss
 
@@ -92,12 +93,12 @@ class ClassificationLitModule(pl.LightningModule):
         mode_acc.reset()
         mode_acc_by_class.reset()
 
-        print(f"{mode} confusion matrix:")
-        self_confmat = getattr(self, f"{mode}_confmat")
-        confmat = self_confmat.compute()
-        self.log(f'{mode}_confmat', confmat)
-        print(confmat)
-        self_confmat.reset()
+        ###debug### print(f"{mode} confusion matrix:")
+        ###debug### self_confmat = getattr(self, f"{mode}_confmat")
+        ###debug### confmat = self_confmat.compute()
+        ###debug### self.log(f'{mode}_confmat', confmat)
+        ###debug### print(confmat)
+        ###debug### self_confmat.reset()
 
         if mode=="test":
             print(f"Total sparsity: {self.all_nnz} / {self.all_nnumel} ({100 * self.all_nnz / self.all_nnumel:.2f}%)")
