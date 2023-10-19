@@ -94,7 +94,6 @@ def main():
             print("Comet is not installed, Comet logger will not be available.")
 
     trainer = pl.Trainer(
-        ###debug### gpus=[args.device], gradient_clip_val=1., max_epochs=args.epochs,
         accelerator="gpu", gradient_clip_val=1., max_epochs=args.epochs,
         limit_train_batches=1., limit_val_batches=1.,
         check_val_every_n_epoch=1,

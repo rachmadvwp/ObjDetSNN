@@ -36,12 +36,6 @@ class ClassificationDataset(Dataset):
             print(f"Done! File saved as {save_file}.")
             
     def __getitem__(self, index):
-        ###debug### sparse_tensor, target = self.samples[index]
-        ###debug### sample = sample.sparse_resize_( ###debug###
-        ###debug###     (self.T, sample.size(1), sample.size(2), self.C), 3, 1
-        ###debug### ).to_dense().permute(0,3,1,2)
-        ###debug### sample = T.Resize((64,64), T.InterpolationMode.NEAREST)(sample)
-        ###debug### return sample, target
         sparse_tensor, target = self.samples[index]
         return sparse_tensor.to_dense().permute(0,3,1,2).float(), target
 

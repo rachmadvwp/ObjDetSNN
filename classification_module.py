@@ -15,15 +15,6 @@ class ClassificationLitModule(pl.LightningModule):
         self.num_classes = num_classes
         self.all_nnz, self.all_nnumel = 0, 0
 
-        ###debug### self.train_acc = torchmetrics.Accuracy(num_classes=num_classes)
-        ###debug### self.val_acc = torchmetrics.Accuracy(num_classes=num_classes)
-        ###debug### self.test_acc = torchmetrics.Accuracy(num_classes=num_classes)
-        ###debug### self.train_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
-        ###debug### self.val_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
-        ###debug### self.test_acc_by_class = torchmetrics.Accuracy(num_classes=num_classes, average="none")
-        ###debug### self.train_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
-        ###debug### self.val_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
-        ###debug### self.test_confmat = torchmetrics.ConfusionMatrix(num_classes=num_classes)
         self.train_acc = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes)
         self.val_acc = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes)
         self.test_acc = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes)
@@ -62,7 +53,6 @@ class ClassificationLitModule(pl.LightningModule):
         if mode != "test":
             self.log(f'{mode}_loss', loss, on_epoch=True, prog_bar=(mode == "train"))
 
-        ###debug### spikingjelly.clock_driven.functional.reset_net(self.model)
         spikingjelly.activation_based.functional.reset_net(self.model)
 
         return loss
@@ -93,13 +83,6 @@ class ClassificationLitModule(pl.LightningModule):
         mode_acc.reset()
         mode_acc_by_class.reset()
 
-        ###debug### print(f"{mode} confusion matrix:")
-        ###debug### self_confmat = getattr(self, f"{mode}_confmat")
-        ###debug### confmat = self_confmat.compute()
-        ###debug### self.log(f'{mode}_confmat', confmat)
-        ###debug### print(confmat)
-        ###debug### self_confmat.reset()
-
         if mode=="test":
             print(f"Total sparsity: {self.all_nnz} / {self.all_nnumel} ({100 * self.all_nnz / self.all_nnumel:.2f}%)")
             self.all_nnz, self.all_nnumel = 0, 0
@@ -128,9 +111,6 @@ class ClassificationLitModule(pl.LightningModule):
             self.all_nnumel += total_nnumel
 
     def configure_optimizers(self):
-        ###debug### print('self.model: ', str(self.model))
-        ###debug### print('self.parameters(): ', str(self.parameters()))
-        ###debug### print('self.lr: ', str(self.lr))
         optimizer = torch.optim.AdamW(self.parameters(), lr=self.lr)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             optimizer,
